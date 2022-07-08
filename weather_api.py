@@ -1,20 +1,24 @@
-#from pyowm import OWM
-# import os
+import sys
+from pyowm import OWM
+import os
+import requests
 
-# #https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=d0fc3409700ca80d231ea8402ca0b872
-# owm = OWM('e43287f5a8c17a47f63c5ea01efe4869')
-# city = os.environ.setdefault('CITY_NAME', 'Саратов')
-# api = os.environ.setdefault('OPENWEATHER_API_KEY', 'd0fc3409700ca80d231ea8402ca0b872')
+city = os.environ.setdefault('CITY_NAME', 'Москва')
+api = os.environ.setdefault('OPENWEATHER_API_KEY', 'd0fc3409700ca80d231ea8402ca0b872')
+
+# r = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api}&units=metric")
+# data = r.json()
+# weather = data['main']['temp']
+# wind = data['wind']['speed']
+# weathe_description = data['weather'][0]['description']
+# # print(f"Погода в городе {city} {weather} градусов, скорость ветра {wind}")
 
 
-import pyowm
+owm = OWM(api)
+mgr = owm.weather_manager()
+observation = mgr.weather_at_place(city)
+weather = observation.weather
+temp = weather.temperature('celsius')['temp']
+#print(temp)
 
-owm =  pyowm.OWM('d0fc3409700ca80d231ea8402ca0b872')
-
-place = input("В каком городе/стране?: ")
-observation = owm.weather_at_place(place)
-w = observation.get_weather()
-
-print("В городе " + place + " сейчас " + w.get_detailed_status())
-temp = w.get_temperature('celsius')['temp']
-print('Температура в районе: ' + str(temp) + '°C')
+sys.stdout.write(str(temp))
