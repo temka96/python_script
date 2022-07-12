@@ -22,3 +22,6 @@ for i in Path(filesPath).rglob('*'):
         if half_year < criticalTime and args.size < size_file:
             print(f"File {i} {size_file} bytes deleted")
             #os.remove(i)
+
+
+
