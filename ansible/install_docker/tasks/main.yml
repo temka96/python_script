@@ -33,12 +33,12 @@
       state: started
       enabled: yes
 
-  - name: Add syslog to daemon.json
+  - name: Add syslog-driver to daemon.json
     copy:
       content: '{ "log-driver": "syslog" }'
       dest: /etc/docker/daemon.json
   
-  - name: Start the Docker service
+  - name: Restart Docker service
     systemd:
       name: docker
       state: restarted
